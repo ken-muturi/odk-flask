@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% block head %}
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/admin-template.css" rel="stylesheet">
+    <title>{% block title %}{% endblock %} - My Webpage</title>
+    {% endblock %}
+</head>
+<body class="nav-sm"> <!-- class="nav-sm" -->
+   <div class="container body">
+        <div class="main_container">
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu nabar-fixed">
+                    <nav class="" role="navigation">
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                            <span class="home-link">
+                            ODK Aggregate
+                            </span>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                          <li class="active"><a href="">Home</a></li> 
+                          <li><a href="">API</a></li>               
+                          <li><a href="">About</a></li>               
+                          <li><a href="">Help</a></li>               
+                        </ul>
+                    </nav>
+                </div>
+                <header class="wlrc" id="header-main">
+                    <ul class="breadcrumb">
+                        <li><a href="#" title="Home"> Home</a></li>
+                        <li><a href="#" title="">Controller</a></li>
+                        <li class="active">Method</li>
+                    </ul>
+                </header>
+            </div>
+            <!-- /top navigation -->
+            <div class="right_col" role="main">
+                {% block notifications %}{% endblock %}
+                <div class="row">
+                    <div class="col-md-12">
+                      {% block content %}{% endblock %}
+                    </div>
+                </div>
+            </div><!-- End .right_col -->
+        </div><!-- End .page content -->
+        <footer>
+            <div class="copyright">
+              {% block footer %}
+                <p class="pull-right">Copyright &copy;</p>
+              {% endblock %}
+            </div>
+        </footer>
+    </div><!-- End .body -->
+</body>
+</html>
