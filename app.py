@@ -9,4 +9,4 @@ except ImportError:
     print >> sys.stderr, "Please create a settings.py with the necessary settings."
     print >> sys.stderr, "You may use the site without these settings, but some features may not work."
 
-app.run(host='127.0.0.1',port=5000,debug=True)
+app.run(debug=True)
