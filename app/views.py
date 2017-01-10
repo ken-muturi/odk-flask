@@ -1,6 +1,5 @@
 from __future__ import with_statement
-import os
-import os.path
+import os, os.path, xmltodict, json
 from sqlite3 import dbapi2 as sqlite3
 from flask import render_template, Response, request, session, g, redirect, url_for, abort, flash, _app_ctx_stack, make_response
 from app import app
@@ -62,9 +61,7 @@ def formList():
 
 @app.route('/submission',methods=['HEAD','POST','GET'])
 def submission():
-    print request.headers
-    print request.args
-    print request.form
+    print request.values
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
         response.headers['X-OpenRosa-Version'] = '1'
@@ -74,7 +71,8 @@ def submission():
         upFile = request.files['xml_submission_file']
         print upFile.name
         xml = upFile.read()
-        print xml
+        
+        print json.dumps( xmltodict(xml) )
     
         #return response
         response = make_response(render_template('home.html'))
