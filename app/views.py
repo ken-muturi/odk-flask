@@ -71,8 +71,8 @@ def submission():
         upFile = request.files['xml_submission_file']
         print upFile.name
         xml = upFile.read()
-        
-        print json.dumps( xmltodict(xml) )
+
+        print json.dumps( xmltodict.parse(xml) )
     
         #return response
         response = make_response(render_template('home.html'))
