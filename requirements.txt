@@ -12,4 +12,3 @@ flipflop
 coverage
 gunicorn
 xmltodict
-json
