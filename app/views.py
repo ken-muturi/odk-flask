@@ -46,7 +46,7 @@ def formList():
     for f in files :
         if f.endswith('.xml') :
             basename = os.path.basename(f)
-            url =  'https://flask-odk.herokuapp.com/uploads/odk/'+ f
+            url =  'https://flask-odk.herokuapp.com/static/uploads/odk/'+ f
             _forms.append( "<xform>" )
             _forms.append( "<formID>"+ basename +"</formID>" )
             _forms.append( "<name>"+ basename +"</name>" )
