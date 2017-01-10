@@ -72,7 +72,7 @@ def submission():
         print upFile.name
         xml = upFile.read()
         o = xmltodict.parse(xml)
-        json.dumps( o )
+        print json.dumps( o )
     
         #return response
         response = make_response(render_template('home.html'))
