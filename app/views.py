@@ -51,7 +51,7 @@ def formList():
             _forms.append( "<formID>"+ basename +"</formID>" )
             _forms.append( "<name>"+ basename +"</name>" )
             _forms.append( "<version>1.1</version>" )
-            _forms.append( "<downloadUrl>/static/uploads/odk/"+ f +"</downloadUrl>" )
+            _forms.append( "<downloadUrl>"+ url_for('static', filename='uploads/odk/'+f) +"</downloadUrl>" )
             _forms.append( "</xform>" )
 
     _forms.append("</xforms>")
