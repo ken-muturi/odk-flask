@@ -60,78 +60,11 @@ def formList():
     response.headers['X-OpenRosa-Version'] = '1'
     return response
 
-@app.route('/getForm',methods=['HEAD','POST','GET'])
-def getForm():
-    xml ="""
-<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
-  <h:head>
-    <h:title>Customer Billing</h:title>
-    <model>
-      <instance>
-        <data id="Customer_Billing_Addition_123">
-          <meta>
-            <instanceID/>
-          </meta>
-          <customer_mobile/>
-          <bill_amount/>
-          <billing_period_start_date/>
-          <billing_period_end_date/>
-        </data>
-      </instance>
-      <itext>
-        <translation lang="eng">
-          <text id="/data/customer_mobile:label">
-            <value>Customer Mobile</value>
-          </text>
-          <text id="/data/customer_mobile:hint">
-            <value>Existing Customer Mobile Number</value>
-          </text>
-          <text id="/data/customer_mobile:constraintMsg">
-            <value>Customer Mobile</value>
-          </text>
-          <text id="/data/bill_amount:label">
-            <value>Bill Amount</value>
-          </text>
-          <text id="/data/billing_period_start_date:label">
-            <value>Billing Period Start Date</value>
-          </text>
-          <text id="/data/billing_period_end_date:label">
-            <value>Billing Period End Date</value>
-          </text>
-        </translation>
-      </itext>
-      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
-      <bind nodeset="/data/customer_mobile" type="long" required="true()" />
-      <bind nodeset="/data/bill_amount" type="int" required="true()" constraint="(. &gt;= '1' and . &lt;= '5000')" jr:constraintMsg="Value must be between 1 and 5000"/>
-      <bind nodeset="/data/billing_period_start_date" type="date" required="true()"/>
-      <bind nodeset="/data/billing_period_end_date" type="date" required="true()"/>
-    </model>
-  </h:head>
-  <h:body>
-    <input ref="/data/customer_mobile">
-      <label ref="jr:itext('/data/customer_mobile:label')"/>
-      <hint ref="jr:itext('/data/customer_mobile:hint')"/>
-    </input>
-    <input ref="/data/bill_amount">
-      <label ref="jr:itext('/data/bill_amount:label')"/>
-    </input>
-    <input ref="/data/billing_period_start_date">
-      <label ref="jr:itext('/data/billing_period_start_date:label')"/>
-    </input>
-    <input ref="/data/billing_period_end_date">
-      <label ref="jr:itext('/data/billing_period_end_date:label')"/>
-    </input>
-  </h:body>
-</h:html>
-"""
-    response = Response(xml, mimetype='text/xml')
-    response.headers['X-OpenRosa-Version'] = '1'
-
-    return response
-
 @app.route('/submission',methods=['HEAD','POST','GET'])
 def submission():
     print request.headers
+    print request.args
+    print request.form
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
         response.headers['X-OpenRosa-Version'] = '1'
