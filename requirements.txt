@@ -11,3 +11,5 @@ guess_language
 flipflop
 coverage
 gunicorn
+xmltodict
+json
