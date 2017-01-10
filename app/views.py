@@ -1,5 +1,6 @@
 from __future__ import with_statement
 import os
+import os.path
 from sqlite3 import dbapi2 as sqlite3
 from flask import render_template, Response, request, session, g, redirect, url_for, abort, flash, _app_ctx_stack, make_response
 from app import app
@@ -35,35 +36,26 @@ def index():
     user = {'nickname': 'Kenneth'}  # fake user
     return render_template('home.html')
 
+# https://flask-odk.herokuapp.com/
 @app.route('/formList',methods=['HEAD','POST','GET'])
 def formList():
-    xml = """<?xml version='1.0' encoding='UTF-8' ?>
-<xforms xmlns="http://openrosa.org/xforms/xformsList">
-  <xform>
-    <formID>mydomain.org:formId</formID>
-    <name>Form with zero or more additional files</name>
-    <version>1.1</version>
-    <hash>md5:c28fc778a9291672badee04ac880a05d</hash>
-    <descriptionText>A possibly very long description of the form</descriptionText>
-    <downloadUrl>http://myhost.com/app/path/getMe/formIdA</downloadUrl>
-  </xform>
-  <xform>
-    <formID>http://mydomain.org/uniqueFormXmlns</formID>
-    <name>Form without additional files</name>
-    <version>v50 alpha</version>
-    <hash>md5:c28fc778a9291672badee04ac770a05d</hash>
-    <descriptionUrl>http://mysecondhost.com/a/description/getMe@formId=uniqueKey</descriptionUrl>
-    <downloadUrl>http://mysecondhost.com/a/different/path/getMe@formId=uniqueKey</downloadUrl>
-  </xform>
-  <xforms-group>
-     <groupID>someId</groupID>
-     <name>Short name of grouping</name>
-     <listUrl>http://whateverhost.com/other/path/forDownload?group=fido</listUrl>
-     <descriptionText>Longer description of what is here</descriptionText>
-     <descriptionUrl>http://morehost.com/description/link</descriptionUrl>
-  </xforms-group>
-</xforms>"""
-    print xml
+    _forms = ["<?xml version='1.0' encoding='UTF-8' ?>"]
+    _forms.append( '<xforms xmlns="http://openrosa.org/xforms/xformsList">' )
+    path =  app.static_folder + '/uploads/odk/'
+    files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f) ) ]
+    for f in files :
+        if f.endswith('.xml') :
+            basename = os.path.basename(f)
+            # url =  'https://flask-odk.herokuapp.com/'+ basename
+            _forms.append( "<xform>" )
+            _forms.append( "<formID>"+ basename +"</formID>" )
+            _forms.append( "<name>"+ basename +"</name>" )
+            _forms.append( "<version>1.1</version>" )
+            _forms.append( "<downloadUrl>/static/uploads/odk/"+ f +"</downloadUrl>" )
+            _forms.append( "</xform>" )
+
+    _forms.append("</xforms>")
+    xml = "".join(_forms)
     response = Response(xml, mimetype='text/xml')
     response.headers['X-OpenRosa-Version'] = '1'
     return response
