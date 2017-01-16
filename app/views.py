@@ -80,8 +80,14 @@ def submission():
         response.headers['X-OpenRosa-Version'] = '1'
         return response, 204
     elif request.environ['REQUEST_METHOD'] == 'POST':
-        uuid = request.POST.get('uuid')
+        deviceid = request.args.get('deviceID')
+        print deviceid
+
+        uuid = request.form.get('uuid')
         print uuid
+
+        _uuid = request.values.get('uuid')
+        print _uuid
         
         media_files = request.files.values()
         print media_files
@@ -100,6 +106,10 @@ def submission():
     elif request.environ['REQUEST_METHOD'] == 'GET':
         response = make_response(render_template('home.html'))
         return response, 200
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
  
 # @app.route('/login',methods=['GET','POST'])
 # def login():

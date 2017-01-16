@@ -22,3 +22,6 @@ TIMEZONE = 'Africa/Nairobi'
 LOGFILE='error.log'
 
 DATABASE = 'app/database/test.db'
+
+UPLOAD_FOLDER = '/static/uploads/uploaded_files/'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
