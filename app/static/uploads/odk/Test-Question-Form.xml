@@ -1,0 +1,126 @@
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa">
+  <h:head>
+    <h:title>Test Question Form</h:title>
+    <model>
+      <instance>
+        <data id="build_Test-Question-Form_1484561802">
+          <meta>
+            <instanceID/>
+          </meta>
+          <name/>
+          <telephone/>
+          <file/>
+          <single_select/>
+          <Multiple_select/>
+          <Images/>
+          <Fileq/>
+        </data>
+      </instance>
+      <itext>
+        <translation lang="eng">
+          <text id="/data/name:label">
+            <value>Your Name</value>
+          </text>
+          <text id="/data/telephone:label">
+            <value>Telephone Question</value>
+          </text>
+          <text id="/data/file:label">
+            <value>File Upload Question</value>
+          </text>
+          <text id="/data/single_select:label">
+            <value>Select Question</value>
+          </text>
+          <text id="/data/single_select:option0">
+            <value>option 1</value>
+          </text>
+          <text id="/data/single_select:option1">
+            <value>option2</value>
+          </text>
+          <text id="/data/single_select:option2">
+            <value>option3</value>
+          </text>
+          <text id="/data/Multiple_select:label">
+            <value>Multple Select Question</value>
+          </text>
+          <text id="/data/Multiple_select:option0">
+            <value>mangoes</value>
+          </text>
+          <text id="/data/Multiple_select:option1">
+            <value>apples</value>
+          </text>
+          <text id="/data/Multiple_select:option2">
+            <value>carrots</value>
+          </text>
+          <text id="/data/Multiple_select:option3">
+            <value>cabbages</value>
+          </text>
+          <text id="/data/Images:label">
+            <value>Image Question</value>
+          </text>
+          <text id="/data/Fileq:label">
+            <value>File Question 2 </value>
+          </text>
+        </translation>
+      </itext>
+      <bind nodeset="/data/meta/instanceID" type="string" readonly="true()" calculate="concat('uuid:', uuid())"/>
+      <bind nodeset="/data/name" type="string" required="true()"/>
+      <bind nodeset="/data/telephone" type="int" required="true()"/>
+      <bind nodeset="/data/file" type="binary"/>
+      <bind nodeset="/data/single_select" type="select1" required="true()"/>
+      <bind nodeset="/data/Multiple_select" type="select"/>
+      <bind nodeset="/data/Images" type="binary"/>
+      <bind nodeset="/data/Fileq" type="binary"/>
+    </model>
+  </h:head>
+  <h:body>
+    <input ref="/data/name">
+      <label ref="jr:itext('/data/name:label')"/>
+    </input>
+    <input ref="/data/telephone">
+      <label ref="jr:itext('/data/telephone:label')"/>
+    </input>
+    <upload ref="/data/file" mediatype="image/*">
+      <label ref="jr:itext('/data/file:label')"/>
+    </upload>
+    <select1 ref="/data/single_select">
+      <label ref="jr:itext('/data/single_select:label')"/>
+      <item>
+        <label ref="jr:itext('/data/single_select:option0')"/>
+        <value>option1</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/single_select:option1')"/>
+        <value>option2</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/single_select:option2')"/>
+        <value>option3</value>
+      </item>
+    </select1>
+    <select ref="/data/Multiple_select">
+      <label ref="jr:itext('/data/Multiple_select:label')"/>
+      <item>
+        <label ref="jr:itext('/data/Multiple_select:option0')"/>
+        <value>mangoes</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/Multiple_select:option1')"/>
+        <value>apples</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/Multiple_select:option2')"/>
+        <value>carrots</value>
+      </item>
+      <item>
+        <label ref="jr:itext('/data/Multiple_select:option3')"/>
+        <value>cabbages</value>
+      </item>
+    </select>
+    <upload ref="/data/Images" mediatype="image/*">
+      <label ref="jr:itext('/data/Images:label')"/>
+    </upload>
+    <upload ref="/data/Fileq" mediatype="image/*">
+      <label ref="jr:itext('/data/Fileq:label')"/>
+    </upload>
+  </h:body>
+</h:html>
