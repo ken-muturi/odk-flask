@@ -80,6 +80,12 @@ def submission():
         response.headers['X-OpenRosa-Version'] = '1'
         return response, 204
     elif request.environ['REQUEST_METHOD'] == 'POST':
+        uuid = request.POST.get('uuid')
+        print uuid
+        
+        media_files = request.files.values()
+        print media_files
+
         xml = ""
         upFile = request.files['xml_submission_file']
         print upFile.name
