@@ -83,11 +83,8 @@ def submission():
         deviceid = request.args.get('deviceID')
         print deviceid
 
-        uuid = request.form.get('uuid')
-        print uuid
-
-        _uuid = request.values.get('uuid')
-        print _uuid
+        _post_values = request.form.values
+        print _post_values
         
         media_files = request.files.values()
         print media_files
