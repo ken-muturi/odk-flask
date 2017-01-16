@@ -12,36 +12,36 @@ from app import app
 # Form xls/xml upload
 # 
 
-def get_db():
-    """Opens a new database connection if there is none yet for the
-    current application context.
-    """
-    top = _app_ctx_stack.top
-    if not hasattr(top, 'sqlite_db'):
-        top.sqlite_db = sqlite3.connect(app.config['DATABASE'])
-    return top.sqlite_db
+# def get_db():
+#     """Opens a new database connection if there is none yet for the
+#     current application context.
+#     """
+#     top = _app_ctx_stack.top
+#     if not hasattr(top, 'sqlite_db'):
+#         top.sqlite_db = sqlite3.connect(app.config['DATABASE'])
+#     return top.sqlite_db
 
-@app.before_request
-def before_request():
-    method = request.form.get('_method', '').upper()
-    if method:
-        request.environ['REQUEST_METHOD'] = method
-        ctx = flask._request_ctx_stack.top
-        ctx.url_adapter.default_method = method
-        assert request.method == method
+# @app.before_request
+# def before_request():
+#     method = request.form.get('_method', '').upper()
+#     if method:
+#         request.environ['REQUEST_METHOD'] = method
+#         ctx = flask._request_ctx_stack.top
+#         ctx.url_adapter.default_method = method
+#         assert request.method == method
     
-    g.user = current_user
-    if( g.user.is_authenticated ):
-        g.user.last_seen = datetime.utcnow()
-        db.session.add(g.user)
-        db.session.commit()
+#     g.user = current_user
+#     if( g.user.is_authenticated ):
+#         g.user.last_seen = datetime.utcnow()
+#         db.session.add(g.user)
+#         db.session.commit()
 
-@app.teardown_appcontext
-def close_db_connection(exception):
-    """Closes the database again at the end of the request."""
-    top = _app_ctx_stack.top
-    if hasattr(top, 'sqlite_db'):
-        top.sqlite_db.close()
+# @app.teardown_appcontext
+# def close_db_connection(exception):
+#     """Closes the database again at the end of the request."""
+#     top = _app_ctx_stack.top
+#     if hasattr(top, 'sqlite_db'):
+#         top.sqlite_db.close()
 
 @app.route('/')
 @app.route('/index')
@@ -95,35 +95,35 @@ def submission():
         response = make_response(render_template('home.html'))
         return response, 200
  
-@app.route('/login',methods=['GET','POST'])
-def login():
-    if request.method == 'GET':
-        return render_template('login.html')
-    username = request.form['username']
-    password = request.form['password']
-    registered_user = User.query.filter_by(username=username,password=password).first()
-    if registered_user is None:
-        flash('Username or Password is invalid' , 'error')
-        return redirect(url_for('login'))
-    login_user(registered_user)
-    flash('Logged in successfully')
-    return redirect(request.args.get('next') or url_for('index'))
+# @app.route('/login',methods=['GET','POST'])
+# def login():
+#     if request.method == 'GET':
+#         return render_template('login.html')
+#     username = request.form['username']
+#     password = request.form['password']
+#     registered_user = User.query.filter_by(username=username,password=password).first()
+#     if registered_user is None:
+#         flash('Username or Password is invalid' , 'error')
+#         return redirect(url_for('login'))
+#     login_user(registered_user)
+#     flash('Logged in successfully')
+#     return redirect(request.args.get('next') or url_for('index'))
 
-@app.route('/register' , methods=['GET','POST'])
-def register():
-    if request.method == 'GET':
-        return render_template('register.html')
-    user = User(request.form['username'] , request.form['password'],request.form['email'])
-    db.session.add(user)
-    db.session.commit()
-    flash('User successfully registered')
-    return redirect(url_for('login'))
+# @app.route('/register' , methods=['GET','POST'])
+# def register():
+#     if request.method == 'GET':
+#         return render_template('register.html')
+#     user = User(request.form['username'] , request.form['password'],request.form['email'])
+#     db.session.add(user)
+#     db.session.commit()
+#     flash('User successfully registered')
+#     return redirect(url_for('login'))
  
-@lm.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+# @lm.user_loader
+# def load_user(id):
+#     return User.query.get(int(id))
 
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
+# @app.route('/logout')
+# def logout():
+#     logout_user()
+#     return redirect(url_for('index'))
