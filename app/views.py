@@ -4,6 +4,14 @@ from sqlite3 import dbapi2 as sqlite3
 from flask import render_template, Response, request, session, g, redirect, url_for, abort, flash, _app_ctx_stack, make_response
 from app import app
 
+# @Todo's
+# add form download as xls
+# add Xform download
+# add jsonform download
+# add xformsManifest
+# Form xls/xml upload
+# 
+
 def get_db():
     """Opens a new database connection if there is none yet for the
     current application context.
@@ -21,6 +29,12 @@ def before_request():
         ctx = flask._request_ctx_stack.top
         ctx.url_adapter.default_method = method
         assert request.method == method
+    
+    g.user = current_user
+    if( g.user.is_authenticated ):
+        g.user.last_seen = datetime.utcnow()
+        db.session.add(g.user)
+        db.session.commit()
 
 @app.teardown_appcontext
 def close_db_connection(exception):
@@ -35,7 +49,6 @@ def index():
     user = {'nickname': 'Kenneth'}  # fake user
     return render_template('home.html')
 
-# https://flask-odk.herokuapp.com/
 @app.route('/formList',methods=['HEAD','POST','GET'])
 def formList():
     _forms = ["<?xml version='1.0' encoding='UTF-8' ?>"]
@@ -81,3 +94,36 @@ def submission():
     elif request.environ['REQUEST_METHOD'] == 'GET':
         response = make_response(render_template('home.html'))
         return response, 200
+ 
+@app.route('/login',methods=['GET','POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    username = request.form['username']
+    password = request.form['password']
+    registered_user = User.query.filter_by(username=username,password=password).first()
+    if registered_user is None:
+        flash('Username or Password is invalid' , 'error')
+        return redirect(url_for('login'))
+    login_user(registered_user)
+    flash('Logged in successfully')
+    return redirect(request.args.get('next') or url_for('index'))
+
+@app.route('/register' , methods=['GET','POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    user = User(request.form['username'] , request.form['password'],request.form['email'])
+    db.session.add(user)
+    db.session.commit()
+    flash('User successfully registered')
+    return redirect(url_for('login'))
+ 
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
