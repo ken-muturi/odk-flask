@@ -1,6 +1,6 @@
 flask
 flask-login
-flask-openid
+flask-bcrypt
 flask-mail
 flask-sqlalchemy
 sqlalchemy-migrate
@@ -10,5 +10,10 @@ flask-babel
 guess_language
 flipflop
 coverage
-gunicorn
 xmltodict
+markupSafe
+Werkzeug
+itsdangerous
+rauth
+requests
+gunicorn

@@ -2,11 +2,9 @@
 <html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    {% block head %}
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/static/css/admin-template.css" rel="stylesheet">
-    <title>{% block title %}{% endblock %} - My Webpage</title>
-    {% endblock %}
+    <title>{{ title }}</title>
 </head>
 <body class="nav-sm"> <!-- class="nav-sm" -->
    <div class="container body">
@@ -22,10 +20,16 @@
                             </span>
                         </div>
                         <ul class="nav navbar-nav navbar-right">
-                          <li class="active"><a href="">Home</a></li> 
-                          <li><a href="">API</a></li>               
-                          <li><a href="">About</a></li>               
-                          <li><a href="">Help</a></li>               
+                            <li><a href="">Documentation</a></li> 
+                            <li><a href="">Api</a></li> 
+                            {% if current_user.is_authenticated %}
+                            <li><a href="{{ url_for('user.logout') }}">Logout</a></li>
+                            <li><a href="{{ url_for('user.profile', nickname=current_user.username) }}">Your Profile</a></li>
+                            {% else %}             
+                            <li><a href="{{ url_for('user.login') }}">Login</a></li>
+                            <li><a href="">About</a></li>
+                            {% endif %}             
+                            <li class="active"><a href="">Home</a></li> 
                         </ul>
                     </nav>
                 </div>
@@ -42,7 +46,7 @@
                 {% block notifications %}{% endblock %}
                 <div class="row">
                     <div class="col-md-12">
-                      {% block content %}{% endblock %}
+                      {% block main_content %}{% endblock %}
                     </div>
                 </div>
             </div><!-- End .right_col -->
