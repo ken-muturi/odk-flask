@@ -17,3 +17,15 @@ itsdangerous
 rauth
 requests
 gunicorn
+Tempita
+WTForms
+Werkzeug
+Whoosh
+blinker
+coverage
+decorator
+pbr
+psycopg2
+pytz
+six
+sqlparse
