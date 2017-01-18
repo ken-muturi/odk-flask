@@ -29,7 +29,7 @@ lm.login_view = "user.login"
 
 try:
 	# log errors
-	if not app.debug:
+	if not app.debug and os.environ.get('HEROKU') is None:
 		import logging
 		from logging.handlers import RotatingFileHandler
 		
