@@ -47,7 +47,7 @@ def formList():
 @logger_blueprint.route('/submission',methods=['HEAD','POST','GET'])
 # @login_required
 def submission():
-    print request
+    print request.headers
     print request.form
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
