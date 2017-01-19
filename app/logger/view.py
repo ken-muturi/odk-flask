@@ -47,6 +47,8 @@ def formList():
 # @login_required
 def submission():
     print " auth "+ request.authorization
+    print " auth 2 "+ request.environ.get('REMOTE_USER')
+    
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
         response.headers['X-OpenRosa-Version'] = '1'
