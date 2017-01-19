@@ -4,10 +4,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 #: The title of this site
 SITE_TITLE='ODK Server App'
+
 #: Support contact email
 SITE_SUPPORT_EMAIL = 'mymail@mydomain.com'
+
 #: TypeKit code for fonts
 TYPEKIT_CODE=''
+
 #: Google Analytics code UA-XXXXXX-X
 GA_CODE=''
 
@@ -16,15 +19,14 @@ GMAPS_CODE=''
 
 #: Database backend
 if os.environ.get('DATABASE_URL') is None:
-    SQLALCHEMY_DATABASE_URI = ('sqlite:///' + os.path.join(basedir, 'database/app.db') +
-                               '?check_same_thread=False')
+    SQLALCHEMY_DATABASE_URI = ('sqlite:///' + os.path.join(basedir, 'database/app.db'))
 else:
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migrations')
 
 SQLALCHEMY_RECORD_QUERIES = True
-WHOOSH_BASE = os.path.join(basedir, 'search.db')
+WHOOSH_BASE = os.path.join(basedir, 'database/search.db')
 
 # Whoosh does not work on Heroku
 WHOOSH_ENABLED = os.environ.get('HEROKU') is None

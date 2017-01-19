@@ -1,25 +1,28 @@
-{% with errors = get_flashed_messages(category_filter=["error"]) %}
-	{% if errors %}
-	<div class="alert-message block-message error">
-	  <a class="close" href="#">×</a>
-	  <ul>
-	    {%- for msg in errors %}
-	    <li>{{ msg }}</li>
-	    {% endfor -%}
-	  </ul>
-	</div>
-	{% endif %}
-{% endwith %}
+{% extends "template.html" %}
+{% block notifications %}
+	{% with errors = get_flashed_messages(category_filter=["error"]) %}
+		{% if errors %}
+		<div class="alert-message block-message error">
+		  <a class="close" href="#">×</a>
+		  <ul>
+		    {%- for msg in errors %}
+		    <li>{{ msg }}</li>
+		    {% endfor -%}
+		  </ul>
+		</div>
+		{% endif %}
+	{% endwith %}
 
-{% with messages = get_flashed_messages(category_filter=["success"]) %}
-	{% if messages %}
-	<div class="alert-message block-message error">
-	  <a class="close" href="#">×</a>
-	  <ul>
-	    {%- for msg in messages %}
-	    <li>{{ msg }}</li>
-	    {% endfor -%}
-	  </ul>
-	</div>
-	{% endif %}
-{% endwith %}
+	{% with messages = get_flashed_messages(category_filter=["success"]) %}
+		{% if messages %}
+		<div class="alert-message block-message error">
+		  <a class="close" href="#">×</a>
+		  <ul>
+		    {%- for msg in messages %}
+		    <li>{{ msg }}</li>
+		    {% endfor -%}
+		  </ul>
+		</div>
+		{% endif %}
+	{% endwith %}
+{% endblock %}

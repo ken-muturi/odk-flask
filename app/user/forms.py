@@ -39,7 +39,6 @@ class RegisterForm(Form):
             return False
         return True
 
-
 class ChangePasswordForm(Form):
     password = PasswordField(
         'password',

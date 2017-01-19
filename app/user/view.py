@@ -28,6 +28,9 @@ def register():
 
 @user_blueprint.route('/login',methods=['GET','POST'])
 def login():
+    if current_user is not None and current_user.is_authenticated:
+        return redirect(url_for('logger.formList'))
+
     form = LoginForm( request.form )
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -35,9 +38,9 @@ def login():
             remember_me = False
             if remember_me in request.form :
                 remember_me = True
-            login_user(registered_user, remember = remember_me)
+            login_user(user, remember = remember_me)
             flash('Logged in successfully', 'success')
-            return redirect(flask.request.args.get('next') or url_for('index'))
+            return redirect(flask.request.args.get('next') or url_for('index') )
         else:
             flash('Username or Password is invalid' , 'error')
     return render_template('login/home.html', title=app.config['SITE_TITLE'], form=form)
