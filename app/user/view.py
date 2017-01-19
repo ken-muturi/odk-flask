@@ -2,12 +2,15 @@ from sqlite3 import dbapi2 as sqlite3
 from flask import Blueprint, render_template, Response, request, redirect, url_for, abort, flash
 
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_httpauth import HTTPBasicAuth
 
 from app import app, db, lm, bcrypt
 from model import User
 from forms import LoginForm, RegisterForm, ChangePasswordForm
 
 user_blueprint = Blueprint('user', __name__)
+
+auth = HTTPBasicAuth();
 
 @user_blueprint.route('/register' , methods=['GET','POST'])
 def register():
@@ -33,8 +36,7 @@ def login():
 
     form = LoginForm( request.form )
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, request.form['password']) :
+        if verify_password(form.email.data, request.form['password']) :
             remember_me = False
             if remember_me in request.form :
                 remember_me = True
@@ -44,6 +46,14 @@ def login():
         else:
             flash('Username or Password is invalid' , 'error')
     return render_template('login/home.html', title=app.config['SITE_TITLE'], form=form)
+
+@auth.verify_password
+def verify_password( email, password):
+    user = User.query.filter_by(email=email).first()
+    if user and bcrypt.check_password_hash(user.password, password) :
+        current_user = user
+        return True
+    return False
 
 @lm.user_loader
 def load_user(id):

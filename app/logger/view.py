@@ -8,6 +8,7 @@ from datetime import datetime
 
 from app import app, db, lm
 from app.user.model import User
+from app.user.view import auth
 
 logger_blueprint = Blueprint('logger', __name__)
 
@@ -20,7 +21,7 @@ logger_blueprint = Blueprint('logger', __name__)
 # add user forms
 
 @logger_blueprint.route('/formList', methods=['HEAD','POST','GET'])
-# @login_required
+@auth.login_required
 def formList():
     _forms = ["<?xml version='1.0' encoding='UTF-8' ?>"]
     _forms.append( '<xforms xmlns="http://openrosa.org/xforms/xformsList">' )
@@ -44,7 +45,7 @@ def formList():
     return response
 
 @logger_blueprint.route('/submission',methods=['HEAD','POST','GET'])
-# @login_required
+@auth.login_required
 def submission():
     print request.authorization
     print "----------------"
