@@ -46,7 +46,7 @@ def formList():
 @logger_blueprint.route('/submission',methods=['HEAD','POST','GET'])
 # @login_required
 def submission():
-    print request.authorization
+    print " auth "+ request.authorization
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
         response.headers['X-OpenRosa-Version'] = '1'
@@ -54,9 +54,6 @@ def submission():
     elif request.environ['REQUEST_METHOD'] == 'POST':
         deviceid = request.args.get('deviceID')
         print deviceid
-
-        _post_values = request.form.values
-        print _post_values
         
         media_files = request.files.values()
         print media_files
