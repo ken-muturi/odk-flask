@@ -48,7 +48,7 @@ def formList():
 @auth.login_required
 def submission():
     auth = request.authorization
-    if( verify_password(auth.email, auth.password) ) :
+    if( verify_password(auth.username, auth.password) ) :
         print current_user.id
 
     if request.environ['REQUEST_METHOD'] == 'HEAD':
