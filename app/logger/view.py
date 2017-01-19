@@ -45,8 +45,8 @@ def formList():
 
 @logger_blueprint.route('/submission',methods=['HEAD','POST','GET'])
 # @login_required
-def submission(username=None):
-    print username
+def submission():
+    print request.authentucation
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
         response.headers['X-OpenRosa-Version'] = '1'
