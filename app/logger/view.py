@@ -8,7 +8,7 @@ from datetime import datetime
 
 from app import app, db, lm
 from app.user.model import User
-from app.user.view import auth
+from app.user.view import auth, verify_password
 
 logger_blueprint = Blueprint('logger', __name__)
 
@@ -47,9 +47,9 @@ def formList():
 @logger_blueprint.route('/submission',methods=['HEAD','POST','GET'])
 @auth.login_required
 def submission():
-    print request.authorization
-    print "----------------"
-    print request.environ
+    auth = request.authorization
+    if( verify_password(auth.email, auth.password) )
+        print current_user.id
 
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
