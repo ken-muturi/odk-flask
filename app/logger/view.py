@@ -20,8 +20,9 @@ logger_blueprint = Blueprint('logger', __name__)
 # add user forms
 
 @logger_blueprint.route('/formList', methods=['HEAD','POST','GET'])
-@login_required
+# @login_required
 def formList():
+    print request.values
     _forms = ["<?xml version='1.0' encoding='UTF-8' ?>"]
     _forms.append( '<xforms xmlns="http://openrosa.org/xforms/xformsList">' )
     path =  app.static_folder + '/uploads/odk/'
@@ -44,7 +45,7 @@ def formList():
     return response
 
 @logger_blueprint.route('/submission',methods=['HEAD','POST','GET'])
-@login_required
+# @login_required
 def submission():
     print request.values
     if request.environ['REQUEST_METHOD'] == 'HEAD':
