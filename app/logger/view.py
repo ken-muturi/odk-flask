@@ -21,8 +21,9 @@ logger_blueprint = Blueprint('logger', __name__)
 
 @logger_blueprint.route('/formList', methods=['HEAD','POST','GET'])
 # @login_required
-def formList():
+def formList(request, username):
     print request
+    print username
     _forms = ["<?xml version='1.0' encoding='UTF-8' ?>"]
     _forms.append( '<xforms xmlns="http://openrosa.org/xforms/xformsList">' )
     path =  app.static_folder + '/uploads/odk/'
@@ -46,9 +47,8 @@ def formList():
 
 @logger_blueprint.route('/submission',methods=['HEAD','POST','GET'])
 # @login_required
-def submission():
-    print request.headers
-    print request.form
+def submission(request, username=None):
+    print request.username
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
         response.headers['X-OpenRosa-Version'] = '1'
