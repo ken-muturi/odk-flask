@@ -47,7 +47,8 @@ def formList():
 # @login_required
 def submission():
     print request.authorization
-    print " auth 2 "+ request.environ.get('REMOTE_USER')
+    print "----------------"
+    print request.environ.get('REMOTE_USER')
 
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
