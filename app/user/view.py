@@ -36,15 +36,15 @@ def login():
 
     form = LoginForm( request.form )
     if form.validate_on_submit():
-        if verify_password(form.email.data, request.form['password']) :
+        if verify_password( form.email.data, request.form['password'] ) :
             remember_me = False
             if remember_me in request.form :
                 remember_me = True
             login_user(user, remember = remember_me)
             flash('Logged in successfully', 'success')
             return redirect(flask.request.args.get('next') or url_for('index') )
-        else:
-            flash('Username or Password is invalid' , 'error')
+        else :
+            flash('Username or Password is invalid', 'error')
     return render_template('login/home.html', title=app.config['SITE_TITLE'], form=form)
 
 @auth.verify_password
