@@ -49,7 +49,7 @@ def formList():
 def submission():
     auth = request.authorization
     if( verify_password(auth.username, auth.password) ) :
-        print current_user.id
+        print current_user
 
     if request.environ['REQUEST_METHOD'] == 'HEAD':
         response = make_response(render_template('head_request.txt'))
