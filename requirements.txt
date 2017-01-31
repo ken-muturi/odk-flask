@@ -13,7 +13,6 @@ flipflop
 coverage
 xmltodict
 markupSafe
-Werkzeug
 itsdangerous
 rauth
 requests
