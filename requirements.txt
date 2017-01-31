@@ -22,7 +22,6 @@ WTForms
 Werkzeug
 Whoosh
 blinker
-coverage
 decorator
 pbr
 psycopg2
