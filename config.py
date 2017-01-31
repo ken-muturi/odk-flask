@@ -18,7 +18,7 @@ GA_CODE=''
 GMAPS_CODE=''
 
 #: Database backend
-if os.environ.get('FLASK_ODK') is None:
+if os.environ.get('DATABASE_URL') is None:
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 else:
 	SQLALCHEMY_DATABASE_URI = ('sqlite:///' + os.path.join(basedir, 'database/app.db'))
