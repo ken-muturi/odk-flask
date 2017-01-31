@@ -18,10 +18,10 @@ GA_CODE=''
 GMAPS_CODE=''
 
 #: Database backend
-if os.environ.get('DATABASE_URL') is None:
-    SQLALCHEMY_DATABASE_URI = ('sqlite:///' + os.path.join(basedir, 'database/app.db'))
-else:
+if os.environ.get('FLASK_ODK') is None:
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+else:
+	SQLALCHEMY_DATABASE_URI = ('sqlite:///' + os.path.join(basedir, 'database/app.db'))
 
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'migrations')
 
@@ -49,5 +49,7 @@ LOGFILE='error.log'
 # administrator list
 ADMINS = ['you@example.com']
 
-UPLOAD_FOLDER = '/static/uploads/uploaded_files/'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+XFORM_UPLOAD_FOLDER = 'app/static/uploads/odk/'
+XFORM_UPLOAD_FOLDER_ = '/static/uploads/odk/'
+UPLOAD_FOLDER = 'app/static/uploads/tmp/'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'xml', 'csv', 'json'])

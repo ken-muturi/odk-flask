@@ -1,5 +1,5 @@
 from sqlite3 import dbapi2 as sqlite3
-from flask import Blueprint, render_template, Response, request, redirect, url_for, abort, flash
+from flask import Blueprint, render_template, Response, request, redirect, url_for, abort, flash, g
 
 from flask_login import login_user, logout_user, current_user, login_required
 from flask_httpauth import HTTPBasicAuth
@@ -11,6 +11,10 @@ from forms import LoginForm, RegisterForm, ChangePasswordForm
 user_blueprint = Blueprint('user', __name__)
 
 auth = HTTPBasicAuth();
+
+@user_blueprint.before_request
+def before_request():
+    g.user = current_user
 
 @user_blueprint.route('/register' , methods=['GET','POST'])
 def register():
@@ -31,7 +35,7 @@ def register():
 
 @user_blueprint.route('/login',methods=['GET','POST'])
 def login():
-    if current_user is not None and current_user.is_authenticated:
+    if g.user is not None and g.user.is_authenticated:
         return redirect(url_for('logger.formList'))
 
     form = LoginForm( request.form )
@@ -40,9 +44,10 @@ def login():
             remember_me = False
             if remember_me in request.form :
                 remember_me = True
-            login_user(user, remember = remember_me)
+            u = verify_password( form.email.data, request.form['password'])
+            login_user(u, remember=remember_me)
             flash('Logged in successfully', 'success')
-            return redirect(flask.request.args.get('next') or url_for('index') )
+            return redirect(request.args.get('next') or url_for('index') )
         else :
             flash('Username or Password is invalid', 'error')
     return render_template('login/home.html', title=app.config['SITE_TITLE'], form=form)
@@ -52,7 +57,8 @@ def verify_password( email, password):
     user = User.query.filter_by(email=email).first()
     if user and bcrypt.check_password_hash(user.password, password) :
         current_user = user
-        return True
+        g.user = current_user
+        return user
     return False
 
 @lm.user_loader
