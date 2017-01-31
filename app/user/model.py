@@ -10,6 +10,12 @@ class User(db.Model):
     about_me = db.Column(db.String(140), nullable=True)
     last_seen = db.Column(db.DateTime, nullable=True)
     date_created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    is_active = db.Column(db.Boolean, default=True)
+
+    xforms = db.relationship('Xform', backref='author', lazy='dynamic')
+    instances = db.relationship('Instance', backref='author', lazy='dynamic')
+    instance_histories = db.relationship('Instancehistory', backref='author', lazy='dynamic')
+    notes = db.relationship('Note', backref='author', lazy='dynamic')
 
     @property
     def is_authenticated(self):
@@ -29,10 +35,14 @@ class User(db.Model):
         except NameError:
             return str(self.id) #python 3
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, password, is_active):
         self.username = username
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
+        self.is_active = is_active
 
     def __repr__(self):
         return '<User %r>' %(self.username)
+
+    def projects(self):
+        return self.projects.filter(project_users.c.user_id == self.id)

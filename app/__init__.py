@@ -27,6 +27,9 @@ app.register_blueprint(logger_blueprint)
 from app.user.model import User
 lm.login_view = "user.login"
 
+from app.logger import model
+from app.main import model
+
 try:
 	# log errors
 	if not app.debug and os.environ.get('HEROKU') is None:

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block main_content %}
+<div class="row">
+	<div class="col-md-6">
+		<form  method="POST" class="form-horizontal">
+			<table class="table table-striped table-bordered">
+				<tr>
+					<th>#</th>
+					<th>username</th>
+					<th>email</th>
+				</tr>
+				{% for user in users %}
+					<tr>
+						<td><input type="checkbox" name="users" value="{{ user.id }}"></td>
+						<td>{{ user.username }}</td>
+						<td>{{ user.email }}</td>
+					</tr>
+				{% endfor%}
+			</table>
+			<input type="hidden" name="project_id" value="{{ project_id }}"/>
+			<input type="submit" class="btn-u btn-u-green" value="Save" />
+		</form>
+	</div>
+</div>
+{% endblock %}

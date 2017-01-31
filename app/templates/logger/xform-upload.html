@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block main_content %}
+<div class="row">
+	<div class="col-md-6">
+	    <form  method="POST" action="{{ url_for('logger.upload_file', project_id=project_id) }}"  enctype="multipart/form-data">
+	    	 {{ upload_form.csrf_token }}
+	    	<div class="form-group">
+	    		<label class="control-label" for="title">Form Title</label>
+	    		{{ upload_form.title(class="form-control") }}
+	    	</div>
+
+	    	<div class="form-group">
+	    		<label class="control-label" for="title">Description</label>
+	    		{{ upload_form.description(class="form-control") }}
+	    	</div> 
+
+	    	<div class="form-group">
+	    		<label class="control-label" for="title">Xls Form</label>
+	    		{{ upload_form.file() }}
+	    	</div> 
+
+	    	<div class="form-group">
+	    		<input type="hidden" name="project_id" value="{{ project_id }}"/> 
+	    		<input type="submit" class='btn-u btn-u-blue btn-u-xs' value="Upload"/> 
+	    	</div>
+	    </form>
+	</div>
+</div>
+{% endblock %}

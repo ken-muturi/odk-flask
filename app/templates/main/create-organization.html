@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block main_content %}
+<div class="row">
+    <div class="col-md-6">
+        <h3>Create Organization </h3>
+        <form  method="POST" class="form-horizontal">
+            {{ form.csrf_token }}
+            <div class="form-group">
+                <label class="control-label" for="title">Title</label>
+                {{ form.title(class="form-control") }}
+            </div>
+         
+            <div class="form-group">
+                <label class="control-label" for="password"> Description</label>
+                {{ form.description(class="form-control") }}
+            </div>
+                  
+            <div class="form-group">
+                <label class="control-label" for="password">Address</label>
+                {{ form.address(class="form-control") }}
+            </div>  
+
+            <div class="form-group">
+                <label class="control-label" for="password">Email</label>
+                {{ form.email(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="password">Website</label>
+                {{ form.website(class="form-control") }}
+            </div>
+         
+            <div class="form-group">
+                <input type="submit" class="btn-u btn-u-green" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
